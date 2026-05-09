@@ -5,12 +5,7 @@ import { OverlayCard } from "@/components/ui/ProjectCard";
 import { CategoryFilter } from "@/components/ui/CategoryFilter";
 import type { Project } from "@/types";
 
-interface WorkGridProps {
-  projects:   Project[];
-  categories: string[];
-}
-
-export function WorkGrid({ projects, categories }: WorkGridProps) {
+export function WorkGrid({ projects, categories }: { projects: Project[]; categories: string[] }) {
   const [active, setActive] = useState("All");
 
   const filtered = useMemo(
@@ -24,13 +19,10 @@ export function WorkGrid({ projects, categories }: WorkGridProps) {
     return c;
   }, [projects]);
 
-  // Split: first card goes full-width hero, rest into 2-col grid
-  const [hero, ...rest] = filtered;
-
   return (
     <div className="gutter py-12">
-      {/* Filter */}
-      <div className="mb-12">
+      {/* Filter bar */}
+      <div className="mb-10">
         <CategoryFilter categories={categories} active={active} onSelect={setActive} counts={counts} />
       </div>
 
@@ -44,34 +36,22 @@ export function WorkGrid({ projects, categories }: WorkGridProps) {
         >
           {filtered.length === 0 ? (
             <div className="py-24 text-center">
-              <p className="font-archivo text-2xl uppercase tracking-tight text-[var(--gray)]">Nothing here yet</p>
+              <p className="font-archivo text-2xl uppercase tracking-tight text-[var(--gray)]">
+                Nothing here yet
+              </p>
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
-
-              {/* Hero card — full width, cinematic aspect ratio */}
-              {hero && (
+            /* Consistent 2-col grid — all projects same size, all images visible immediately */
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {filtered.map((p, i) => (
                 <OverlayCard
-                  project={hero}
-                  index={0}
-                  priority
-                  aspect="aspect-[16/8] md:aspect-[21/9]"
+                  key={p.id}
+                  project={p}
+                  index={i}
+                  priority={i < 2}
+                  aspect="aspect-[4/3]"
                 />
-              )}
-
-              {/* Rest — 2-col grid with tall portrait cards */}
-              {rest.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {rest.map((p, i) => (
-                    <OverlayCard
-                      key={p.id}
-                      project={p}
-                      index={i + 1}
-                      aspect="aspect-[4/3] md:aspect-[3/2]"
-                    />
-                  ))}
-                </div>
-              )}
+              ))}
             </div>
           )}
         </motion.div>
