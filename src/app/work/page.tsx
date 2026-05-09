@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { projects, getAllCategories } from "@/data/projects";
-import { WorkList } from "@/components/sections/WorkList";
+import { WorkGrid } from "@/components/sections/WorkGrid";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -10,14 +10,16 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <div>
-      <div className="gutter pt-14 pb-12 border-b border-[var(--border)]">
+      <div className="gutter pt-14 pb-10 border-b border-[var(--border)]">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-6 h-[2px]" style={{ background: "var(--blue)" }} />
           <p className="t-label" style={{ color: "var(--blue)" }}>Portfolio</p>
         </div>
-        <h1 className="t-heading text-[var(--white)]">All Work</h1>
+        <h1 className="font-archivo text-5xl md:text-7xl uppercase tracking-tight text-[var(--white)] leading-none">
+          All Work
+        </h1>
       </div>
-      <WorkList projects={projects} categories={getAllCategories()} />
+      <WorkGrid projects={projects} categories={getAllCategories()} />
     </div>
   );
 }

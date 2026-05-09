@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Download, ExternalLink } from "lucide-react";
 import { getProjectBySlug, projects, getRelatedProjects } from "@/data/projects";
 import { GallerySection } from "@/components/sections/GallerySection";
-import { ProjectCard } from "@/components/ui/ProjectCard";
+import { ProjectCard, OverlayCard } from "@/components/ui/ProjectCard";
 
 interface Props { params: Promise<{ slug: string }>; }
 
