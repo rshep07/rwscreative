@@ -9,8 +9,16 @@ const config: Config = {
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        syne:  ["Syne", "system-ui", "sans-serif"],
+        space: ["Space Grotesk", "system-ui", "sans-serif"],
+      },
+      colors: {
+        teal:  { DEFAULT: "#00B4A6", dark: "#008F83", light: "#33C5B9" },
+        coral: { DEFAULT: "#F25240" },
+      },
       animation: {
-        marquee: "marquee 35s linear infinite",
+        marquee: "marquee 36s linear infinite",
       },
       keyframes: {
         marquee: {

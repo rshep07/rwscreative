@@ -1,88 +1,76 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDownRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { useRef } from "react";
 
 export function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const fade = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const up   = useTransform(scrollYProgress, [0, 0.5], ["0%", "-10%"]);
+  const imgY   = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const fade   = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const textY  = useTransform(scrollYProgress, [0, 0.55], ["0%", "-8%"]);
 
   return (
-    <section ref={ref} className="relative min-h-[100svh] flex flex-col justify-between overflow-hidden bg-[var(--bg)]">
-
-      {/* Big background number — decorative */}
-      <div
-        className="absolute right-[-2vw] bottom-[8vh] select-none pointer-events-none"
-        style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: "clamp(16rem, 40vw, 52rem)",
-          fontWeight: 300,
-          lineHeight: 1,
-          color: "transparent",
-          WebkitTextStroke: "1px #1C1C1C",
-          zIndex: 0,
-        }}
-      >
-        RWS
-      </div>
+    <section ref={ref} className="relative min-h-[100svh] flex items-end overflow-hidden">
+      {/* Parallax photo */}
+      <motion.div style={{ y: imgY }} className="absolute inset-0 z-0 scale-[1.08]">
+        <Image
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=90"
+          alt="RWS Creative studio"
+          fill sizes="100vw"
+          className="object-cover"
+          priority
+        />
+        {/* Two-layer gradient: heavy at bottom for type legibility, softer at top */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
+      </motion.div>
 
       {/* Content */}
       <motion.div
-        style={{ opacity: fade, y: up }}
-        className="relative z-10 gutter flex flex-col justify-end flex-1 pb-16 md:pb-20 pt-[var(--nav-h)]"
+        style={{ opacity: fade, y: textY }}
+        className="relative z-10 gutter pb-16 md:pb-24 w-full"
       >
-        {/* Eyebrow */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
+        {/* Chip */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="label text-[var(--lime)] mb-6 md:mb-8"
+          transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-7"
         >
-          Independent Design Studio — Canada
-        </motion.p>
+          <span className="chip-dark">Independent Design Studio — Canada</span>
+        </motion.div>
 
-        {/* Giant headline */}
-        <div className="overflow-hidden mb-4">
-          <motion.h1
-            initial={{ y: "100%" }}
-            animate={{ y: "0%" }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="display text-[var(--ink)]"
-          >
-            RWS
-          </motion.h1>
-        </div>
-        <div className="overflow-hidden mb-10 md:mb-14">
-          <motion.h1
-            initial={{ y: "100%" }}
-            animate={{ y: "0%" }}
-            transition={{ duration: 1, delay: 0.52, ease: [0.16, 1, 0.3, 1] }}
-            className="display text-[var(--lime)] italic"
-          >
-            Creative.
-          </motion.h1>
-        </div>
+        {/* Big headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="d-hero text-white mb-4 max-w-5xl"
+        >
+          Bold work.
+          <br />
+          <span style={{ color: "var(--teal)" }}>Built to last.</span>
+        </motion.h1>
 
-        {/* Bottom row — tagline + CTA */}
+        {/* Subline + CTA row */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6"
+          transition={{ duration: 0.7, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mt-8"
         >
-          <p className="text-[var(--muted)] text-base md:text-lg leading-relaxed max-w-sm">
-            Brand identity, editorial, packaging, and motion. Built to be remembered.
+          <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-sm">
+            Brand identity, editorial, packaging, and motion — connected by craft and intention.
           </p>
           <div className="flex items-center gap-3 flex-shrink-0">
-            <Link href="/work" className="btn-lime">
+            <Link href="/work" className="btn-teal">
               View Work <ArrowDownRight size={14} />
             </Link>
-            <Link href="/contact" className="btn-ghost-white">
-              Start a Project
+            <Link href="/contact" className="btn-outline-white">
+              Start a Project <ArrowUpRight size={13} />
             </Link>
           </div>
         </motion.div>
@@ -92,8 +80,8 @@ export function HeroSection() {
       <motion.div
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
-        transition={{ duration: 1.2, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-0 left-[var(--g)] w-px h-16 bg-[var(--border)] origin-bottom"
+        transition={{ duration: 1.4, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-0 right-[var(--g)] w-px h-14 bg-white/20 origin-bottom z-10"
       />
     </section>
   );

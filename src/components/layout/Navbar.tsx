@@ -7,13 +7,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const LINKS = [
-  { href: "/work",    label: "Work" },
-  { href: "/about",   label: "About" },
+  { href: "/work",    label: "Work"    },
+  { href: "/about",   label: "About"   },
   { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
-  const pathname  = usePathname();
+  const pathname = usePathname();
   const [open, setOpen]       = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -32,96 +32,91 @@ export function Navbar() {
   return (
     <>
       <motion.header
-        initial={{ y: -8, opacity: 0 }}
+        initial={{ y: -10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         style={{ height: "var(--nav-h)" }}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-          scrolled ? "bg-[#0A0A0A]/90 backdrop-blur-md border-b border-[#1C1C1C]" : "bg-transparent"
+          "fixed inset-x-0 top-0 z-50 transition-all duration-400",
+          scrolled
+            ? "bg-[#F7F7F5]/95 backdrop-blur-sm border-b border-[var(--border)]"
+            : "bg-transparent"
         )}
       >
         <div className="gutter h-full flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="font-['Cormorant_Garamond',Georgia,serif] text-2xl font-light text-[var(--ink)] hover:text-[var(--lime)] transition-colors duration-300 tracking-tight">
-            RWS<span className="text-[var(--lime)]">.</span>
+          <Link
+            href="/"
+            className="font-syne font-extrabold text-xl tracking-tight text-[var(--black)] hover:text-[var(--teal)] transition-colors duration-300"
+          >
+            RWS<span className="text-[var(--teal)]">.</span>
           </Link>
 
-          {/* Desktop */}
-          <nav className="hidden md:flex items-center gap-10">
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-8">
             {LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 className={cn(
-                  "label ul-link transition-colors duration-300",
-                  pathname.startsWith(l.href) ? "text-[var(--lime)]" : "text-[var(--muted)] hover:text-[var(--ink)]"
+                  "tag ul-link transition-colors duration-300",
+                  pathname.startsWith(l.href)
+                    ? "text-[var(--teal)]"
+                    : "text-[var(--gray-mid)] hover:text-[var(--black)]"
                 )}
               >
                 {l.label}
               </Link>
             ))}
-            <Link href="/contact" className="btn-lime ml-4">
+            <Link href="/contact" className="btn-teal ml-2">
               Let's Talk
             </Link>
           </nav>
 
-          {/* Mobile toggle */}
+          {/* Mobile burger */}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden flex flex-col gap-1.5 p-2"
+            className="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8"
             aria-label={open ? "Close menu" : "Open menu"}
           >
-            <motion.span
-              animate={{ rotate: open ? 45 : 0, y: open ? 8 : 0 }}
-              className="block w-6 h-px bg-[var(--ink)]"
-            />
-            <motion.span
-              animate={{ opacity: open ? 0 : 1 }}
-              className="block w-6 h-px bg-[var(--ink)]"
-            />
-            <motion.span
-              animate={{ rotate: open ? -45 : 0, y: open ? -8 : 0 }}
-              className="block w-6 h-px bg-[var(--ink)]"
-            />
+            <motion.span animate={{ rotate: open ? 45 : 0, y: open ? 7 : 0 }}
+              className="block h-[1.5px] w-6 bg-[var(--black)] origin-center" />
+            <motion.span animate={{ opacity: open ? 0 : 1, scaleX: open ? 0 : 1 }}
+              className="block h-[1.5px] w-6 bg-[var(--black)]" />
+            <motion.span animate={{ rotate: open ? -45 : 0, y: open ? -7 : 0 }}
+              className="block h-[1.5px] w-6 bg-[var(--black)] origin-center" />
           </button>
         </div>
       </motion.header>
 
-      {/* Mobile overlay */}
+      {/* Mobile full-screen menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[var(--bg)] flex flex-col justify-center gutter"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{   opacity: 0, y: -8 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-[var(--white)] flex flex-col justify-center gutter"
           >
-            <nav className="flex flex-col gap-3">
+            <nav className="flex flex-col gap-2">
               {LINKS.map((l, i) => (
                 <motion.div
                   key={l.href}
-                  initial={{ opacity: 0, x: -24 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.07, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: i * 0.06, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <Link
-                    href={l.href}
-                    className="font-['Cormorant_Garamond',Georgia,serif] text-6xl font-light text-[var(--ink)] hover:text-[var(--lime)] transition-colors duration-300"
-                  >
+                  <Link href={l.href}
+                    className="font-syne font-extrabold text-5xl text-[var(--black)] hover:text-[var(--teal)] transition-colors duration-300 leading-tight">
                     {l.label}
                   </Link>
                 </motion.div>
               ))}
             </nav>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mt-12"
-            >
-              <a href="mailto:hello@rwscreative.ca" className="label text-[var(--muted)] hover:text-[var(--lime)] transition-colors">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.28 }} className="mt-12">
+              <a href="mailto:hello@rwscreative.ca"
+                className="tag text-[var(--gray-mid)] hover:text-[var(--teal)] transition-colors">
                 hello@rwscreative.ca
               </a>
             </motion.div>
