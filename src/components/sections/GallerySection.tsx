@@ -24,7 +24,7 @@ export function GallerySection({ images, title }: { images: string[]; title: str
               viewport={{ once: true }} transition={{ duration: 0.2, delay: i * 0.05 }}
               className={`zoom relative group w-full bg-[var(--dim)] overflow-hidden ${i === 0 ? "sm:col-span-2 aspect-[16/7]" : "aspect-[4/3]"}`}
               aria-label={`Open image ${i+1}`}>
-              <Image src={src} alt={`${title} ${i+1}`} fill sizes="(max-width:640px) 100vw, 50vw" className="object-cover" />
+              <Image unoptimized src={src} alt={`${title} ${i+1}`} fill sizes="(max-width:640px) 100vw, 50vw" className="object-cover" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-150 flex items-center justify-center">
                 <Expand size={20} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
               </div>
