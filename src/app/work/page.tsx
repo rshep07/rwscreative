@@ -4,21 +4,20 @@ import { WorkGrid } from "@/components/sections/WorkGrid";
 
 export const metadata: Metadata = {
   title: "Work",
-  description: "RWS Creative portfolio — brand identity, editorial, packaging, motion, and web design.",
+  description: "RWS Creative — brand identity, editorial, packaging, motion, and web design.",
 };
 
 export default function WorkPage() {
-  const categories = getAllCategories();
   return (
     <div>
-      <div className="bg-[var(--black)] text-[var(--white)] gutter pt-16 pb-14">
-        <span className="chip-dark mb-4 inline-flex">Portfolio</span>
-        <h1 className="d-xl text-[var(--white)] mb-4">All Work</h1>
-        <p className="text-[var(--gray-mid)] max-w-md leading-relaxed">
-          Brand identity, editorial, packaging, motion, and web — each project treated as its own problem worth solving properly.
+      <div className="gutter pt-16 pb-14 border-b border-[var(--border)]">
+        <span className="coral-tag mb-4 inline-flex">Portfolio</span>
+        <h1 className="t-xl text-[var(--ink)] mb-4">All Work</h1>
+        <p className="text-[var(--muted)] max-w-md text-sm leading-relaxed tracking-wide">
+          Each project treated as its own problem worth solving properly.
         </p>
       </div>
-      <WorkGrid projects={projects} categories={categories} />
+      <WorkGrid projects={projects} categories={getAllCategories()} />
     </div>
   );
 }

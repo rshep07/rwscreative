@@ -2,233 +2,168 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════
    TOKENS
-═══════════════════════════════════════ */
+═══════════════════════════════════════════ */
 @layer base {
   :root {
-    /* Core palette */
-    --black:     #0C0C0C;
-    --white:     #F7F7F5;
-    --teal:      #00B4A6;
-    --teal-dk:   #008F83;
-    --teal-lt:   #E6F9F7;
-
-    /* Secondary */
-    --gray-dk:   #2A2A2A;
-    --gray-mid:  #6E6E6E;
-    --gray-lt:   #D0D0CE;
-    --gray-bg:   #F0F0EE;
-    --coral:     #F25240;  /* complement to teal */
-
-    /* Surfaces */
-    --bg:        var(--white);
-    --border:    #E0E0DE;
-
-    /* Layout */
-    --nav-h:     68px;
+    --bg:        #0C0C0C;
+    --surface:   #131313;
+    --raised:    #1A1A1A;
+    --ink:       #EDEDE9;
+    --muted:     #6E6E6E;
+    --faint:     #272727;
+    --coral:     #FF4D6D;
+    --coral-dk:  #D93055;
+    --coral-lt:  #FF8099;
+    --coral-glow:rgba(255,77,109,0.12);
+    --border:    #222222;
+    --nav-h:     60px;
     --g:         clamp(1.25rem, 5vw, 5rem);
-    --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+    --ease:      cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
 
-  html {
-    scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-  }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
   body {
-    background: var(--white);
-    color: var(--black);
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    line-height: 1.6;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    line-height: 1.65;
   }
 
-  ::selection { background: var(--teal); color: #fff; }
+  ::selection { background: var(--coral); color: #fff; }
 
-  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar { width: 2px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--gray-lt); }
+  ::-webkit-scrollbar-thumb { background: var(--faint); }
 }
 
-/* ═══════════════════════════════════════
-   TYPOGRAPHY
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY SCALE
+═══════════════════════════════════════════ */
 @layer utilities {
-  /* Syne display sizes */
-  .d-hero {
-    font-family: "Syne", system-ui, sans-serif;
-    font-size: clamp(4rem, 11vw, 12rem);
-    font-weight: 800;
-    line-height: 0.9;
-    letter-spacing: -0.03em;
-  }
-  .d-xl {
-    font-family: "Syne", system-ui, sans-serif;
-    font-size: clamp(2.75rem, 6vw, 7rem);
-    font-weight: 800;
-    line-height: 0.92;
-    letter-spacing: -0.025em;
-  }
-  .d-lg {
-    font-family: "Syne", system-ui, sans-serif;
-    font-size: clamp(2rem, 4vw, 4.5rem);
-    font-weight: 700;
+  /* Wide-tracked Raleway display — the signature look */
+  .t-hero {
+    font-family: "Raleway", system-ui, sans-serif;
+    font-size: clamp(4rem, 10vw, 11rem);
+    font-weight: 200;
     line-height: 0.95;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
-  .d-md {
-    font-family: "Syne", system-ui, sans-serif;
-    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
-    font-weight: 700;
+  .t-xl {
+    font-family: "Raleway", system-ui, sans-serif;
+    font-size: clamp(2.5rem, 5.5vw, 6.5rem);
+    font-weight: 200;
+    line-height: 0.97;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .t-lg {
+    font-family: "Raleway", system-ui, sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 4rem);
+    font-weight: 300;
     line-height: 1.05;
-    letter-spacing: -0.015em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
-  .d-sm {
-    font-family: "Syne", system-ui, sans-serif;
-    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
-    font-weight: 600;
+  .t-md {
+    font-family: "Raleway", system-ui, sans-serif;
+    font-size: clamp(1.25rem, 2vw, 2rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .t-sm {
+    font-family: "Raleway", system-ui, sans-serif;
+    font-size: clamp(1rem, 1.25vw, 1.25rem);
+    font-weight: 400;
     line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-
-  /* Labels — Space Grotesk */
-  .tag {
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
   }
 
-  /* Layout helpers */
-  .gutter  { padding-left: var(--g); padding-right: var(--g); }
-  .nav-pt  { padding-top: var(--nav-h); }
+  /* Inter labels */
+  .label {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
 
-  /* Colour shorthands */
-  .c-teal  { color: var(--teal); }
-  .c-gray  { color: var(--gray-mid); }
-  .c-coral { color: var(--coral); }
+  /* Colours */
+  .c-coral  { color: var(--coral); }
+  .c-muted  { color: var(--muted); }
+  .c-ink    { color: var(--ink); }
+
+  /* Layout */
+  .gutter   { padding-left: var(--g); padding-right: var(--g); }
+  .nav-pt   { padding-top: var(--nav-h); }
 }
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════
    COMPONENTS
-═══════════════════════════════════════ */
+═══════════════════════════════════════════ */
 @layer components {
 
-  /* ─ Buttons ─ */
-  .btn {
+  /* ── Buttons — snappy 180ms ── */
+  .btn-coral {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.875rem 1.75rem;
-    transition: all 0.22s var(--ease);
-    white-space: nowrap;
-    line-height: 1;
-  }
-
-  /* Teal fill */
-  .btn-teal {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.875rem 1.75rem;
-    transition: all 0.22s var(--ease);
-    white-space: nowrap;
-    line-height: 1;
-    background: var(--teal);
+    background: var(--coral);
     color: #fff;
+    padding: 0.8rem 1.75rem;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: background 180ms var(--ease);
+    white-space: nowrap;
   }
-  .btn-teal:hover { background: var(--teal-dk); }
+  .btn-coral:hover { background: var(--coral-dk); }
 
-  /* Black fill */
-  .btn-black {
+  .btn-ghost {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.75rem;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    padding: 0.8rem 1.75rem;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 0.65rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    padding: 0.875rem 1.75rem;
-    transition: all 0.22s var(--ease);
+    transition: border-color 180ms var(--ease), color 180ms var(--ease);
     white-space: nowrap;
-    line-height: 1;
-    background: var(--black);
-    color: var(--white);
   }
-  .btn-black:hover { background: var(--teal); }
+  .btn-ghost:hover { border-color: var(--coral); color: var(--coral); }
 
-  /* White fill (on dark bg) */
-  .btn-white {
+  .btn-ghost-light {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.75rem;
+    border: 1px solid rgba(237,237,233,0.2);
+    color: var(--ink);
+    padding: 0.8rem 1.75rem;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 0.65rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    padding: 0.875rem 1.75rem;
-    transition: all 0.22s var(--ease);
+    transition: border-color 180ms var(--ease), color 180ms var(--ease);
     white-space: nowrap;
-    line-height: 1;
-    background: var(--white);
-    color: var(--black);
   }
-  .btn-white:hover { background: var(--teal); color: #fff; }
+  .btn-ghost-light:hover { border-color: var(--coral); color: var(--coral); }
 
-  /* Outline */
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.875rem 1.75rem;
-    transition: all 0.22s var(--ease);
-    white-space: nowrap;
-    line-height: 1;
-    border: 1.5px solid var(--border);
-    color: var(--black);
-  }
-  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
-
-  /* Outline on dark bg */
-  .btn-outline-white {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.875rem 1.75rem;
-    transition: all 0.22s var(--ease);
-    white-space: nowrap;
-    line-height: 1;
-    border: 1.5px solid rgba(247,247,245,0.25);
-    color: var(--white);
-  }
-  .btn-outline-white:hover { border-color: var(--teal); color: var(--teal); }
-
-  /* ─ Underline link ─ */
+  /* ── Underline hover ── */
   .ul-link {
     position: relative;
     display: inline-block;
@@ -237,96 +172,105 @@
     content: '';
     position: absolute;
     bottom: -1px; left: 0;
-    width: 0; height: 1.5px;
-    background: var(--teal);
-    transition: width 0.35s var(--ease);
+    width: 0; height: 1px;
+    background: var(--coral);
+    transition: width 180ms var(--ease);
   }
   .ul-link:hover::after { width: 100%; }
 
-  /* ─ Teal rule ─ */
-  .teal-rule {
+  /* ── Coral rule ── */
+  .coral-rule {
     display: inline-block;
-    width: 2.5rem;
-    height: 2px;
-    background: var(--teal);
+    width: 2rem;
+    height: 1.5px;
+    background: var(--coral);
     flex-shrink: 0;
   }
 
-  /* ─ Image zoom ─ */
-  .zoom { overflow: hidden; }
-  .zoom img { transition: transform 0.85s var(--ease); }
-  .zoom:hover img { transform: scale(1.06); }
+  /* ── Coral chip / tag ── */
+  .coral-tag {
+    display: inline-flex;
+    align-items: center;
+    background: var(--coral-glow);
+    color: var(--coral);
+    padding: 0.3rem 0.8rem;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,77,109,0.2);
+  }
 
-  /* ─ Form field ─ */
+  /* ── Dark tag ── */
+  .dim-tag {
+    display: inline-flex;
+    align-items: center;
+    background: var(--raised);
+    color: var(--muted);
+    padding: 0.3rem 0.8rem;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+  }
+
+  /* ── Image zoom ── */
+  .zoom { overflow: hidden; }
+  .zoom img { transition: transform 280ms var(--ease); }
+  .zoom:hover img { transform: scale(1.04); }
+
+  /* ── Filter pill ── */
+  .pill {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    padding: 0.45rem 1.1rem;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 150ms, border-color 150ms;
+  }
+  .pill:hover { color: var(--ink); border-color: var(--faint); }
+  .pill.active { color: var(--coral); border-color: var(--coral); }
+
+  /* ── Contact form field ── */
   .field {
     width: 100%;
     background: transparent;
     border: 0;
-    border-bottom: 1.5px solid var(--border);
+    border-bottom: 1px solid var(--border);
     padding: 0.875rem 0;
-    color: var(--black);
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 1rem;
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 0.9375rem;
     outline: none;
-    transition: border-color 0.25s ease;
+    transition: border-color 180ms var(--ease);
     -webkit-appearance: none;
     appearance: none;
   }
-  .field:focus { border-color: var(--teal); }
-  .field::placeholder { color: var(--gray-mid); }
+  .field:focus { border-color: var(--coral); }
+  .field::placeholder { color: var(--muted); }
   textarea.field { resize: vertical; min-height: 8rem; }
 
-  /* ─ Filter pill ─ */
-  .pill {
-    position: relative;
-    overflow: hidden;
-    border: 1.5px solid var(--border);
-    padding: 0.4375rem 1.125rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--gray-mid);
-    transition: color 0.22s ease, border-color 0.22s ease;
-  }
-  .pill:hover { color: var(--black); border-color: var(--gray-lt); }
-  .pill.active { color: #fff; border-color: var(--teal); }
-
-  /* ─ Section chip ─ */
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--teal-lt);
-    color: var(--teal-dk);
-    padding: 0.3rem 0.875rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  /* Dark section chip */
-  .chip-dark {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(0,180,166,0.15);
-    color: var(--teal);
-    padding: 0.3rem 0.875rem;
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  /* ── Vertical coral spine (hero) ── */
+  .coral-spine {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--coral);
+    z-index: 10;
   }
 }
 
-/* ═══════════════════════════════════════
-   MARQUEE ANIMATION
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
 @keyframes marquee {
   0%   { transform: translateX(0%); }
   100% { transform: translateX(-50%); }

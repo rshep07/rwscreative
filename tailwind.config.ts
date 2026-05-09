@@ -10,21 +10,20 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        syne:  ["Syne", "system-ui", "sans-serif"],
-        space: ["Space Grotesk", "system-ui", "sans-serif"],
+        raleway: ["Raleway", "system-ui", "sans-serif"],
+        inter:   ["Inter",   "system-ui", "sans-serif"],
       },
       colors: {
-        teal:  { DEFAULT: "#00B4A6", dark: "#008F83", light: "#33C5B9" },
-        coral: { DEFAULT: "#F25240" },
+        coral: { DEFAULT: "#FF4D6D", dark: "#D93055", light: "#FF8099", glow: "rgba(255,77,109,0.15)" },
       },
+      transitionDuration: { DEFAULT: "180ms" },
       animation: {
         marquee: "marquee 36s linear infinite",
+        "fade-in": "fadeIn 0.2s ease-out both",
       },
       keyframes: {
-        marquee: {
-          "0%":   { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
+        marquee: { "0%": { transform: "translateX(0%)" }, "100%": { transform: "translateX(-50%)" } },
+        fadeIn:  { "0%": { opacity: "0", transform: "translateY(8px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
       },
     },
   },

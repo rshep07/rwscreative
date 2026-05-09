@@ -2,87 +2,118 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
+
+const EASE = [0.4, 0, 0.2, 1] as const;
 
 export function HeroSection() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgY   = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const fade   = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
-  const textY  = useTransform(scrollYProgress, [0, 0.55], ["0%", "-8%"]);
-
   return (
-    <section ref={ref} className="relative min-h-[100svh] flex items-end overflow-hidden">
-      {/* Parallax photo */}
-      <motion.div style={{ y: imgY }} className="absolute inset-0 z-0 scale-[1.08]">
-        <Image
-          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=90"
-          alt="RWS Creative studio"
-          fill sizes="100vw"
-          className="object-cover"
-          priority
-        />
-        {/* Two-layer gradient: heavy at bottom for type legibility, softer at top */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
-      </motion.div>
-
-      {/* Content */}
-      <motion.div
-        style={{ opacity: fade, y: textY }}
-        className="relative z-10 gutter pb-16 md:pb-24 w-full"
+    <section
+      className="relative w-full overflow-hidden"
+      style={{ height: "100svh", minHeight: "600px" }}
+    >
+      {/* ── Left half — text ── */}
+      <div
+        className="absolute inset-y-0 left-0 flex flex-col justify-end gutter pb-16 md:pb-20"
+        style={{ width: "50%", background: "var(--bg)", zIndex: 1 }}
       >
-        {/* Chip */}
+        {/* Studio label */}
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-7"
+          transition={{ duration: 0.2, delay: 0.2, ease: EASE }}
+          className="mb-8"
         >
-          <span className="chip-dark">Independent Design Studio — Canada</span>
+          <span className="coral-tag">Independent Design Studio — Canada</span>
         </motion.div>
 
-        {/* Big headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="d-hero text-white mb-4 max-w-5xl"
-        >
-          Bold work.
-          <br />
-          <span style={{ color: "var(--teal)" }}>Built to last.</span>
-        </motion.h1>
+        {/* Giant tracked headline */}
+        <div className="overflow-hidden mb-2">
+          <motion.h1
+            initial={{ y: "110%" }}
+            animate={{ y: "0%" }}
+            transition={{ duration: 0.35, delay: 0.3, ease: EASE }}
+            className="t-hero text-[var(--ink)] leading-none"
+          >
+            RWS
+          </motion.h1>
+        </div>
+        <div className="overflow-hidden mb-10">
+          <motion.h1
+            initial={{ y: "110%" }}
+            animate={{ y: "0%" }}
+            transition={{ duration: 0.35, delay: 0.38, ease: EASE }}
+            className="t-hero text-[var(--coral)] leading-none"
+          >
+            Creative
+          </motion.h1>
+        </div>
 
-        {/* Subline + CTA row */}
+        {/* Tagline */}
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, delay: 0.5, ease: EASE }}
+          className="text-[var(--muted)] text-sm leading-relaxed max-w-[280px] mb-8"
+        >
+          Brand identity, editorial, packaging, and motion — connected by craft and intention.
+        </motion.p>
+
+        {/* CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mt-8"
+          transition={{ duration: 0.2, delay: 0.58, ease: EASE }}
+          className="flex items-center gap-3"
         >
-          <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-sm">
-            Brand identity, editorial, packaging, and motion — connected by craft and intention.
-          </p>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <Link href="/work" className="btn-teal">
-              View Work <ArrowDownRight size={14} />
-            </Link>
-            <Link href="/contact" className="btn-outline-white">
-              Start a Project <ArrowUpRight size={13} />
-            </Link>
-          </div>
+          <Link href="/work" className="btn-coral">
+            View Work <ArrowRight size={13} />
+          </Link>
+          <Link href="/contact" className="btn-ghost-light">
+            Start a Project <ArrowUpRight size={13} />
+          </Link>
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* Scroll line */}
+      {/* ── Coral spine at the split ── */}
       <motion.div
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
-        transition={{ duration: 1.4, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-0 right-[var(--g)] w-px h-14 bg-white/20 origin-bottom z-10"
+        transition={{ duration: 0.35, delay: 0.15, ease: EASE }}
+        className="coral-spine"
+        style={{ left: "50%", transformOrigin: "top" }}
       />
+
+      {/* ── Right half — image ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.1, ease: EASE }}
+        className="absolute inset-y-0 right-0 zoom"
+        style={{ width: "50%", zIndex: 0 }}
+      >
+        <Image
+          src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=90"
+          alt="RWS Creative — featured work"
+          fill
+          sizes="50vw"
+          className="object-cover"
+          priority
+        />
+        {/* Subtle dark-left vignette so left spine reads cleanly */}
+        <div className="absolute inset-0"
+          style={{ background: "linear-gradient(to right, rgba(12,12,12,0.4) 0%, transparent 30%)" }} />
+      </motion.div>
+
+      {/* ── Mobile fallback: stacked ── */}
+      <style>{`
+        @media (max-width: 640px) {
+          #hero-left  { width: 100% !important; height: 55% !important; top: 45% !important; justify-content: flex-start !important; padding-top: 2rem !important; }
+          #hero-right { width: 100% !important; height: 45% !important; bottom: unset !important; top: 0 !important; }
+          .coral-spine { display: none; }
+        }
+      `}</style>
     </section>
   );
 }

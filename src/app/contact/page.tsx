@@ -10,51 +10,46 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div>
-      <div className="bg-[var(--black)] text-[var(--white)] gutter pt-16 pb-20">
-        <span className="chip-dark mb-4 inline-flex">Contact</span>
-        <h1 className="d-xl text-[var(--white)] leading-[0.92]">
+      {/* ── Header ── */}
+      <div className="gutter pt-16 pb-16 border-b border-[var(--border)]">
+        <span className="coral-tag mb-4 inline-flex">Contact</span>
+        <h1 className="t-xl text-[var(--ink)]">
           Let's make<br />
-          <span style={{ color: "var(--teal)" }}>something.</span>
+          <span style={{ color: "var(--coral)" }}>something.</span>
         </h1>
       </div>
 
-      <div className="gutter py-16 md:py-20 grid grid-cols-1 md:grid-cols-[1fr_280px] gap-14 md:gap-20">
-        {/* Form */}
+      {/* ── Body ── */}
+      <div className="gutter py-16 md:py-20 grid grid-cols-1 md:grid-cols-[1fr_260px] gap-14 md:gap-20">
         <div>
-          <p className="font-syne font-bold text-2xl md:text-3xl text-[var(--black)] leading-tight mb-10 max-w-lg tracking-tight">
+          <p className="font-raleway font-light text-xl md:text-2xl text-[var(--ink)] leading-tight mb-10 tracking-[0.03em] uppercase">
             Tell us about your project — we'll be in touch within 48 hours.
           </p>
           <ContactForm />
         </div>
 
-        {/* Info sidebar */}
         <aside>
           {[
             {
               heading: "New Business",
-              body: "We take on a small number of projects each year to ensure every client gets full attention.",
+              body: "We take on a small number of projects each year.",
               link: { label: "hello@rwscreative.ca", href: "mailto:hello@rwscreative.ca" },
             },
-            {
-              heading: "Based In",
-              body: "Canada — available for projects worldwide.",
-              link: null,
-            },
+            { heading: "Based In", body: "Canada — available worldwide.", link: null },
             {
               heading: "Social",
-              body: "Follow our work and process.",
+              body: "Follow our process and latest work.",
               links: [
                 { label: "Instagram", href: "https://instagram.com" },
                 { label: "LinkedIn",  href: "https://linkedin.com" },
               ],
             },
           ].map((item) => (
-            <div key={item.heading} className="py-8 border-b border-[var(--border)]">
-              <p className="tag text-[var(--gray-mid)] mb-3">{item.heading}</p>
-              <p className="text-sm text-[var(--gray-mid)] leading-relaxed mb-3">{item.body}</p>
+            <div key={item.heading} className="py-7 border-b border-[var(--border)]">
+              <p className="label text-[var(--muted)] mb-2">{item.heading}</p>
+              <p className="text-xs text-[var(--muted)] leading-relaxed tracking-wide mb-2">{item.body}</p>
               {"link" in item && item.link && (
-                <a href={item.link.href}
-                  className="text-sm text-[var(--black)] font-medium hover:text-[var(--teal)] ul-link transition-colors">
+                <a href={item.link.href} className="text-sm text-[var(--ink)] hover:text-[var(--coral)] ul-link transition-colors duration-150">
                   {item.link.label}
                 </a>
               )}
@@ -62,8 +57,8 @@ export default function ContactPage() {
                 <div className="flex flex-col gap-1">
                   {item.links.map((l) => (
                     <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer"
-                      className="text-sm text-[var(--black)] font-medium hover:text-[var(--teal)] transition-colors inline-flex items-center gap-1">
-                      {l.label} <ArrowUpRight size={11} />
+                      className="text-sm text-[var(--ink)] hover:text-[var(--coral)] transition-colors duration-150 inline-flex items-center gap-1">
+                      {l.label} <ArrowUpRight size={10} />
                     </a>
                   ))}
                 </div>

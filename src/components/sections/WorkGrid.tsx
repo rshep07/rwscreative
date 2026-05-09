@@ -11,9 +11,6 @@ interface WorkGridProps {
   categories: string[];
 }
 
-// Alternate tall cards to add visual rhythm in the 2-col grid
-const TALL_PATTERN = [false, true, true, false, false, true];
-
 export function WorkGrid({ projects, categories }: WorkGridProps) {
   const [active, setActive] = useState("All");
 
@@ -28,44 +25,40 @@ export function WorkGrid({ projects, categories }: WorkGridProps) {
     return c;
   }, [projects]);
 
+  // Split into two columns manually so we can offset the right col
+  const leftCol  = filtered.filter((_, i) => i % 2 === 0);
+  const rightCol = filtered.filter((_, i) => i % 2 === 1);
+
   return (
     <div className="gutter py-12">
-      {/* Filter bar */}
-      <div className="mb-12">
+      {/* Filter */}
+      <div className="mb-14">
         <CategoryFilter categories={categories} active={active} onSelect={setActive} counts={counts} />
       </div>
 
-      <LayoutGroup>
-        <motion.div
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-16 items-start"
-        >
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project, i) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{   opacity: 0, y: 12  }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <ProjectCard
-                  project={project}
-                  index={i}
-                  priority={i < 2}
-                  tall={TALL_PATTERN[i % TALL_PATTERN.length]}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      </LayoutGroup>
+      {/* Broken 2-col grid: right col offset down */}
+      {filtered.length > 0 ? (
+        <LayoutGroup>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
+            {/* Left column */}
+            <div className="flex flex-col gap-16">
+              {leftCol.map((p, i) => (
+                <ProjectCard key={p.id} project={p} index={i * 2} priority={i === 0} />
+              ))}
+            </div>
 
-      {filtered.length === 0 && (
-        <div className="py-28 text-center col-span-2">
-          <p className="d-md text-[var(--black)] mb-2">Nothing here yet</p>
-          <p className="tag text-[var(--gray-mid)]">More coming soon</p>
+            {/* Right column — offset down to create intentionally broken rhythm */}
+            <div className="flex flex-col gap-16 sm:mt-24">
+              {rightCol.map((p, i) => (
+                <ProjectCard key={p.id} project={p} index={i * 2 + 1} priority={i === 0 && leftCol.length === 0} />
+              ))}
+            </div>
+          </div>
+        </LayoutGroup>
+      ) : (
+        <div className="py-24 text-center">
+          <p className="t-md text-[var(--ink)] mb-2">Nothing here yet</p>
+          <p className="label text-[var(--muted)]">More projects coming soon</p>
         </div>
       )}
     </div>
