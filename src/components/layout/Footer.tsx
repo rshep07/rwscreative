@@ -3,55 +3,52 @@ import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
   const year = new Date().getFullYear();
-
   return (
-    <footer className="border-t border-[var(--color-border)] mt-auto">
+    <footer className="border-t border-[var(--border)]">
       <div className="gutter py-14">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
-          {/* Brand */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
           <div>
             <Link
               href="/"
-              className="font-display text-2xl font-light c-ink hover:c-accent transition-colors duration-300 block mb-3"
+              className="font-['Cormorant_Garamond',Georgia,serif] text-3xl font-light text-[var(--ink)] hover:text-[var(--lime)] transition-colors duration-300 block mb-4"
             >
-              RWS<span className="c-accent">.</span>
+              RWS<span className="text-[var(--lime)]">.</span>
             </Link>
-            <p className="text-sm c-muted leading-relaxed max-w-xs">
-              Independent graphic design studio. Brand identity, editorial, packaging, motion, and web design.
+            <p className="text-sm text-[var(--muted)] leading-relaxed max-w-xs">
+              Independent graphic design studio. Bold work for brands that want to be remembered.
             </p>
           </div>
 
-          {/* Nav */}
           <div>
-            <p className="eyebrow c-faint mb-4">Pages</p>
-            <div className="flex flex-col gap-2.5">
-              {[["Work", "/work"], ["About", "/about"], ["Contact", "/contact"]].map(([label, href]) => (
-                <Link key={href} href={href} className="text-sm c-muted hover:c-ink link-line self-start transition-colors duration-300">
+            <p className="label text-[var(--muted)] mb-5">Pages</p>
+            <div className="flex flex-col gap-3">
+              {([["Work", "/work"], ["About", "/about"], ["Contact", "/contact"]] as const).map(([label, href]) => (
+                <Link key={href} href={href} className="text-sm text-[var(--muted)] hover:text-[var(--lime)] ul-link self-start transition-colors duration-300">
                   {label}
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* Contact */}
           <div>
-            <p className="eyebrow c-faint mb-4">Connect</p>
-            <div className="flex flex-col gap-2.5">
-              <a href="mailto:hello@rwscreative.ca" className="text-sm c-muted hover:c-ink link-line self-start transition-colors duration-300">
+            <p className="label text-[var(--muted)] mb-5">Connect</p>
+            <div className="flex flex-col gap-3">
+              <a href="mailto:hello@rwscreative.ca" className="text-sm text-[var(--muted)] hover:text-[var(--lime)] ul-link self-start transition-colors">
                 hello@rwscreative.ca
               </a>
-              {[["Instagram", "https://instagram.com"], ["LinkedIn", "https://linkedin.com"]].map(([label, href]) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="text-sm c-muted hover:c-ink transition-colors duration-300 inline-flex items-center gap-1">
-                  {label} <ArrowUpRight size={11} />
+              {(["Instagram", "LinkedIn"] as const).map((s) => (
+                <a key={s} href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                  className="text-sm text-[var(--muted)] hover:text-[var(--lime)] transition-colors inline-flex items-center gap-1">
+                  {s} <ArrowUpRight size={11} />
                 </a>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-          <p className="eyebrow c-faint">© {year} RWS Creative. All rights reserved.</p>
-          <p className="eyebrow c-faint">rwscreative.ca</p>
+        <div className="pt-6 border-t border-[var(--border)] flex flex-col sm:flex-row justify-between gap-2">
+          <p className="label text-[var(--muted)]">© {year} RWS Creative</p>
+          <p className="label text-[var(--muted)]">rwscreative.ca</p>
         </div>
       </div>
     </footer>

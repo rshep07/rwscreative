@@ -7,77 +7,63 @@ export const metadata: Metadata = {
   description: "Get in touch with RWS Creative — hello@rwscreative.ca",
 };
 
-const INFO = [
-  {
-    heading: "New Projects",
-    body: "We take on a small number of projects each year to ensure every client gets our full attention.",
-    cta: { label: "hello@rwscreative.ca", href: "mailto:hello@rwscreative.ca" },
-  },
-  {
-    heading: "Based In",
-    body: "Canada — available for projects worldwide, with experience working across North America and Europe.",
-    cta: null,
-  },
-  {
-    heading: "Social",
-    body: "Follow our process and latest work on Instagram and LinkedIn.",
-    links: [
-      { label: "Instagram", href: "https://instagram.com" },
-      { label: "LinkedIn",  href: "https://linkedin.com" },
-    ],
-  },
-];
-
 export default function ContactPage() {
   return (
-    <div>
-      {/* ── Header ── */}
-      <div className="gutter pt-14 pb-16 border-b border-[var(--color-border)]">
-        <p className="eyebrow c-accent mb-3">Contact</p>
-        <h1 className="h-xl c-ink max-w-2xl">
-          Let's make something.
+    <div className="nav-pt">
+      <div className="gutter pt-14 pb-12 border-b border-[var(--border)]">
+        <p className="label text-[var(--lime)] mb-4">Contact</p>
+        <h1 className="headline text-[var(--ink)]">
+          Let's make<br />
+          <span className="text-[var(--lime)] italic">something.</span>
         </h1>
       </div>
 
-      {/* ── Main grid ── */}
-      <div className="gutter py-16 md:py-24 grid grid-cols-1 md:grid-cols-[1fr_380px] gap-14 md:gap-20">
+      <div className="gutter py-16 md:py-24 grid grid-cols-1 md:grid-cols-[1fr_320px] gap-14 md:gap-20">
         {/* Form */}
         <div>
-          <p className="font-display text-2xl md:text-3xl font-light c-ink leading-[1.3] mb-10 max-w-lg">
+          <p className="font-['Cormorant_Garamond',Georgia,serif] text-2xl md:text-3xl font-light text-[var(--ink)] leading-[1.3] mb-10 max-w-lg">
             Tell us about your project and we'll be in touch within 48 hours.
           </p>
           <ContactForm />
         </div>
 
         {/* Info */}
-        <aside className="space-y-10 md:pt-2">
-          {INFO.map((item) => (
-            <div key={item.heading} className="pt-8 border-t border-[var(--color-border)] first:pt-0 first:border-0">
-              <p className="eyebrow c-faint text-[0.58rem] mb-3">{item.heading}</p>
-              <p className="text-sm c-muted leading-relaxed mb-3">{item.body}</p>
-              {item.cta && (
-                <a
-                  href={item.cta.href}
-                  className="text-sm c-ink hover:c-accent link-line transition-colors duration-300"
-                >
-                  {item.cta.label}
+        <aside className="space-y-0">
+          {[
+            {
+              heading: "New Business",
+              content: (
+                <a href="mailto:hello@rwscreative.ca"
+                  className="text-sm text-[var(--ink)] hover:text-[var(--lime)] ul-link transition-colors">
+                  hello@rwscreative.ca
                 </a>
-              )}
-              {item.links && (
+              ),
+              note: "We take on a small number of projects each year."
+            },
+            {
+              heading: "Based In",
+              content: <p className="text-sm text-[var(--ink)]">Canada</p>,
+              note: "Available for projects worldwide."
+            },
+            {
+              heading: "Social",
+              content: (
                 <div className="flex flex-col gap-1">
-                  {item.links.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm c-ink hover:c-accent transition-colors duration-300 inline-flex items-center gap-1"
-                    >
-                      {link.label} <ArrowUpRight size={11} />
+                  {[["Instagram", "https://instagram.com"], ["LinkedIn", "https://linkedin.com"]].map(([label, href]) => (
+                    <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                      className="text-sm text-[var(--ink)] hover:text-[var(--lime)] transition-colors inline-flex items-center gap-1">
+                      {label} <ArrowUpRight size={11} />
                     </a>
                   ))}
                 </div>
-              )}
+              ),
+              note: ""
+            }
+          ].map((item) => (
+            <div key={item.heading} className="py-8 border-b border-[var(--border)]">
+              <p className="label text-[var(--muted)] mb-3">{item.heading}</p>
+              {item.content}
+              {item.note && <p className="text-xs text-[var(--muted)] mt-2 leading-relaxed">{item.note}</p>}
             </div>
           ))}
         </aside>
