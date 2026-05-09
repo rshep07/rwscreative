@@ -2,25 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════
+/* ─────────────────────────────────────
    TOKENS
-═══════════════════════════════════════════ */
+───────────────────────────────────── */
 @layer base {
   :root {
-    --bg:        #0C0C0C;
-    --surface:   #131313;
-    --raised:    #1A1A1A;
-    --ink:       #EDEDE9;
-    --muted:     #6E6E6E;
-    --faint:     #272727;
-    --coral:     #FF4D6D;
-    --coral-dk:  #D93055;
-    --coral-lt:  #FF8099;
-    --coral-glow:rgba(255,77,109,0.12);
-    --border:    #222222;
-    --nav-h:     60px;
-    --g:         clamp(1.25rem, 5vw, 5rem);
-    --ease:      cubic-bezier(0.4, 0, 0.2, 1);
+    --black:   #0A0A0A;
+    --white:   #F2F2F0;
+    --blue:    #00BFFF;
+    --blue10:  rgba(0,191,255,0.08);
+    --blue25:  rgba(0,191,255,0.25);
+    --gray:    #555555;
+    --dim:     #1E1E1E;
+    --border:  #1A1A1A;
+    --nav-h:   64px;
+    --g:       clamp(1.25rem, 5vw, 5rem);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -28,249 +24,220 @@
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
   body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: "Inter", system-ui, sans-serif;
-    line-height: 1.65;
+    background: var(--black);
+    color: var(--white);
+    font-family: "Archivo", system-ui, sans-serif;
+    line-height: 1.6;
   }
 
-  ::selection { background: var(--coral); color: #fff; }
+  ::selection { background: var(--blue); color: var(--black); }
 
   ::-webkit-scrollbar { width: 2px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--faint); }
+  ::-webkit-scrollbar-thumb { background: var(--dim); }
 }
 
-/* ═══════════════════════════════════════════
-   TYPOGRAPHY SCALE
-═══════════════════════════════════════════ */
+/* ─────────────────────────────────────
+   TYPE SCALE  — Archivo Black is the star
+───────────────────────────────────── */
 @layer utilities {
-  /* Wide-tracked Raleway display — the signature look */
-  .t-hero {
-    font-family: "Raleway", system-ui, sans-serif;
-    font-size: clamp(4rem, 10vw, 11rem);
-    font-weight: 200;
+  /* Screen-filling display — for the hero */
+  .t-display {
+    font-family: "Archivo Black", system-ui, sans-serif;
+    font-size: clamp(5rem, 22vw, 28rem);
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  /* Section headline */
+  .t-heading {
+    font-family: "Archivo Black", system-ui, sans-serif;
+    font-size: clamp(2.5rem, 7vw, 9rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  /* Project row title — oversized list items */
+  .t-project {
+    font-family: "Archivo Black", system-ui, sans-serif;
+    font-size: clamp(2rem, 5vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  /* Sub-heading */
+  .t-sub {
+    font-family: "Archivo Black", system-ui, sans-serif;
+    font-size: clamp(1.25rem, 2.5vw, 3rem);
+    font-weight: 900;
     line-height: 0.95;
-    letter-spacing: 0.06em;
+    letter-spacing: -0.01em;
     text-transform: uppercase;
   }
-  .t-xl {
-    font-family: "Raleway", system-ui, sans-serif;
-    font-size: clamp(2.5rem, 5.5vw, 6.5rem);
-    font-weight: 200;
-    line-height: 0.97;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-  .t-lg {
-    font-family: "Raleway", system-ui, sans-serif;
-    font-size: clamp(1.75rem, 3.5vw, 4rem);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .t-md {
-    font-family: "Raleway", system-ui, sans-serif;
-    font-size: clamp(1.25rem, 2vw, 2rem);
-    font-weight: 300;
-    line-height: 1.1;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .t-sm {
-    font-family: "Raleway", system-ui, sans-serif;
-    font-size: clamp(1rem, 1.25vw, 1.25rem);
+
+  /* Mono label — Space Mono */
+  .t-label {
+    font-family: "Space Mono", monospace;
+    font-size: 0.6875rem;
     font-weight: 400;
-    line-height: 1.2;
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
 
-  /* Inter labels */
-  .label {
-    font-family: "Inter", system-ui, sans-serif;
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+  /* Body */
+  .t-body {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
   }
 
-  /* Colours */
-  .c-coral  { color: var(--coral); }
-  .c-muted  { color: var(--muted); }
-  .c-ink    { color: var(--ink); }
+  /* Gutter + nav */
+  .gutter  { padding-left: var(--g); padding-right: var(--g); }
+  .nav-pt  { padding-top: var(--nav-h); }
 
-  /* Layout */
-  .gutter   { padding-left: var(--g); padding-right: var(--g); }
-  .nav-pt   { padding-top: var(--nav-h); }
+  /* Colour helpers */
+  .c-blue  { color: var(--blue); }
+  .c-gray  { color: var(--gray); }
+  .c-white { color: var(--white); }
 }
 
-/* ═══════════════════════════════════════════
+/* ─────────────────────────────────────
    COMPONENTS
-═══════════════════════════════════════════ */
+───────────────────────────────────── */
 @layer components {
 
-  /* ── Buttons — snappy 180ms ── */
-  .btn-coral {
+  /* ── Buttons ── */
+  .btn-blue {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--coral);
-    color: #fff;
-    padding: 0.8rem 1.75rem;
-    font-family: "Inter", system-ui, sans-serif;
+    background: var(--blue);
+    color: var(--black);
+    padding: 0.875rem 2rem;
+    font-family: "Space Mono", monospace;
     font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: background 180ms var(--ease);
+    transition: background 150ms ease, color 150ms ease;
     white-space: nowrap;
   }
-  .btn-coral:hover { background: var(--coral-dk); }
+  .btn-blue:hover { background: var(--white); }
 
-  .btn-ghost {
+  .btn-outline {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     border: 1px solid var(--border);
-    color: var(--ink);
-    padding: 0.8rem 1.75rem;
-    font-family: "Inter", system-ui, sans-serif;
+    color: var(--white);
+    padding: 0.875rem 2rem;
+    font-family: "Space Mono", monospace;
     font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: border-color 180ms var(--ease), color 180ms var(--ease);
+    transition: border-color 150ms ease, color 150ms ease;
     white-space: nowrap;
   }
-  .btn-ghost:hover { border-color: var(--coral); color: var(--coral); }
+  .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
 
-  .btn-ghost-light {
+  .btn-outline-dark {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    border: 1px solid rgba(237,237,233,0.2);
-    color: var(--ink);
-    padding: 0.8rem 1.75rem;
-    font-family: "Inter", system-ui, sans-serif;
+    border: 1px solid rgba(10,10,10,0.2);
+    color: var(--black);
+    padding: 0.875rem 2rem;
+    font-family: "Space Mono", monospace;
     font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: border-color 180ms var(--ease), color 180ms var(--ease);
+    transition: all 150ms ease;
     white-space: nowrap;
   }
-  .btn-ghost-light:hover { border-color: var(--coral); color: var(--coral); }
+  .btn-outline-dark:hover { background: var(--black); color: var(--white); }
 
   /* ── Underline hover ── */
-  .ul-link {
-    position: relative;
-    display: inline-block;
-  }
+  .ul-link { position: relative; display: inline-block; }
   .ul-link::after {
     content: '';
     position: absolute;
-    bottom: -1px; left: 0;
+    bottom: -2px; left: 0;
     width: 0; height: 1px;
-    background: var(--coral);
-    transition: width 180ms var(--ease);
+    background: var(--blue);
+    transition: width 150ms ease;
   }
   .ul-link:hover::after { width: 100%; }
 
-  /* ── Coral rule ── */
-  .coral-rule {
-    display: inline-block;
-    width: 2rem;
-    height: 1.5px;
-    background: var(--coral);
-    flex-shrink: 0;
-  }
-
-  /* ── Coral chip / tag ── */
-  .coral-tag {
+  /* ── Blue tag ── */
+  .blue-tag {
     display: inline-flex;
     align-items: center;
-    background: var(--coral-glow);
-    color: var(--coral);
-    padding: 0.3rem 0.8rem;
-    font-family: "Inter", system-ui, sans-serif;
+    background: var(--blue10);
+    color: var(--blue);
+    border: 1px solid rgba(0,191,255,0.2);
+    padding: 0.25rem 0.75rem;
+    font-family: "Space Mono", monospace;
     font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    font-weight: 400;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    border: 1px solid rgba(255,77,109,0.2);
   }
 
-  /* ── Dark tag ── */
-  .dim-tag {
-    display: inline-flex;
-    align-items: center;
-    background: var(--raised);
-    color: var(--muted);
-    padding: 0.3rem 0.8rem;
-    font-family: "Inter", system-ui, sans-serif;
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    border: 1px solid var(--border);
-  }
-
-  /* ── Image zoom ── */
+  /* ── Zoom ── */
   .zoom { overflow: hidden; }
-  .zoom img { transition: transform 280ms var(--ease); }
-  .zoom:hover img { transform: scale(1.04); }
+  .zoom img { transition: transform 280ms ease; }
+  .zoom:hover img { transform: scale(1.05); }
 
-  /* ── Filter pill ── */
-  .pill {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    padding: 0.45rem 1.1rem;
-    font-family: "Inter", system-ui, sans-serif;
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    transition: color 150ms, border-color 150ms;
-  }
-  .pill:hover { color: var(--ink); border-color: var(--faint); }
-  .pill.active { color: var(--coral); border-color: var(--coral); }
-
-  /* ── Contact form field ── */
+  /* ── Form field ── */
   .field {
     width: 100%;
     background: transparent;
     border: 0;
     border-bottom: 1px solid var(--border);
     padding: 0.875rem 0;
-    color: var(--ink);
-    font-family: "Inter", system-ui, sans-serif;
-    font-size: 0.9375rem;
+    color: var(--white);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 1rem;
     outline: none;
-    transition: border-color 180ms var(--ease);
+    transition: border-color 150ms ease;
     -webkit-appearance: none;
     appearance: none;
   }
-  .field:focus { border-color: var(--coral); }
-  .field::placeholder { color: var(--muted); }
+  .field:focus { border-color: var(--blue); }
+  .field::placeholder { color: var(--gray); }
   textarea.field { resize: vertical; min-height: 8rem; }
 
-  /* ── Vertical coral spine (hero) ── */
-  .coral-spine {
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 2px;
-    background: var(--coral);
-    z-index: 10;
+  /* ── Filter pill ── */
+  .pill {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    padding: 0.4rem 1rem;
+    font-family: "Space Mono", monospace;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    transition: color 150ms, border-color 150ms;
   }
+  .pill:hover { color: var(--white); border-color: var(--dim); }
+  .pill.active { color: var(--blue); border-color: var(--blue); }
 }
 
-/* ═══════════════════════════════════════════
-   ANIMATIONS
-═══════════════════════════════════════════ */
+/* ─────────────────────────────────────
+   KEYFRAMES
+───────────────────────────────────── */
 @keyframes marquee {
   0%   { transform: translateX(0%); }
   100% { transform: translateX(-50%); }
