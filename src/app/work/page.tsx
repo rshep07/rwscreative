@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { projects, getAllCategories } from "@/data/projects";
-import { WorkGrid } from "@/components/sections/WorkGrid";
+import { EditorialGrid } from "@/components/ui/EditorialGrid";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -10,16 +10,18 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <div>
-      <div className="gutter pt-14 pb-10 border-b border-[var(--border)]">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-6 h-[2px]" style={{ background: "var(--blue)" }} />
-          <p className="t-label" style={{ color: "var(--blue)" }}>Portfolio</p>
+      {/* Header */}
+      <div className="gutter pt-14 pb-0">
+        <div className="flex items-end justify-between pb-5 border-b border-[var(--rule)]">
+          <div>
+            <p className="f-mono text-[var(--mid)] mb-2">{projects.length.toString().padStart(2,"0")} Projects</p>
+            <h1 className="f-title text-[var(--canvas)]">Work</h1>
+          </div>
+          <p className="f-mono text-[var(--mid)] hidden md:block pb-1">rwscreative.ca/work</p>
         </div>
-        <h1 className="font-archivo text-5xl md:text-7xl uppercase tracking-tight text-[var(--white)] leading-none">
-          All Work
-        </h1>
       </div>
-      <WorkGrid projects={projects} categories={getAllCategories()} />
+
+      <EditorialGrid projects={projects} categories={getAllCategories()} />
     </div>
   );
 }

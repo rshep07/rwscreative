@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,23 +8,25 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        archivo: ['"Archivo Black"', "system-ui", "sans-serif"],
-        mono:    ['"Space Mono"',   "monospace"],
-        sans:    ['"Archivo"',      "system-ui", "sans-serif"],
+        display: ['"Archivo Black"', "system-ui", "sans-serif"],
+        body:    ['"Archivo"',       "system-ui", "sans-serif"],
+        mono:    ['"Space Mono"',    "monospace"],
       },
       colors: {
-        blue: {
-          DEFAULT: "#00BFFF",
-          dim:     "rgba(0,191,255,0.1)",
-          glow:    "rgba(0,191,255,0.25)",
-        },
+        ink:     "#0A0A0A",
+        canvas:  "#E8E4DC",
+        mid:     "#8A867E",
+        dim:     "#1A1816",
+        raised:  "#222018",
+        rule:    "#2A2724",
+        accent:  "#00BFFF",
       },
       animation: {
-        marquee: "marquee 38s linear infinite",
+        marquee: "marquee 40s linear infinite",
       },
       keyframes: {
         marquee: {
-          "0%":   { transform: "translateX(0%)" },
+          "0%": { transform: "translateX(0%)" },
           "100%": { transform: "translateX(-50%)" },
         },
       },
@@ -33,5 +34,4 @@ const config: Config = {
   },
   plugins: [],
 };
-
 export default config;

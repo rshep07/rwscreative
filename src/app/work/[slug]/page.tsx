@@ -2,14 +2,13 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Download, ExternalLink } from "lucide-react";
-import { getProjectBySlug, projects, getRelatedProjects } from "@/data/projects";
-import { GallerySection } from "@/components/sections/GallerySection";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { getProjectBySlug, projects, getRelated } from "@/data/projects";
 
 interface Props { params: Promise<{ slug: string }>; }
 
 export async function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+  return projects.map(p => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -24,20 +23,13 @@ function renderMd(md: string) {
     const t = block.trim();
     if (t.startsWith("## ")) {
       return (
-        <h2 key={i}
-          className="font-archivo uppercase tracking-tight text-[var(--white)] mt-10 mb-3"
-          style={{ fontSize: "clamp(1.2rem, 2.5vw, 1.75rem)", letterSpacing: "-0.01em" }}>
+        <h2 key={i} className="font-display text-xl md:text-2xl uppercase tracking-tight text-[var(--canvas)] mt-10 mb-3">
           {t.replace(/^## /, "")}
         </h2>
       );
     }
-    const html = t
-      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-      .replace(/\*(.+?)\*/g, "<em>$1</em>");
-    return (
-      <p key={i} className="t-body text-[var(--gray)] leading-[1.8] mb-0"
-        dangerouslySetInnerHTML={{ __html: html }} />
-    );
+    const html = t.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");
+    return <p key={i} className="text-[var(--mid)] leading-[1.8] text-sm" dangerouslySetInnerHTML={{ __html: html }} />;
   });
 }
 
@@ -45,154 +37,136 @@ export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) notFound();
-  const related = getRelatedProjects(project, 2);
+  const related = getRelated(project, 2);
 
   return (
     <article>
-      {/* ── Hero ── */}
-      <div className="relative overflow-hidden" style={{ height: "60vh", minHeight: "380px", background: "var(--dim)" }}>
-        <Image
-          src={project.heroImage}
-          alt={project.title}
-          fill
-          sizes="100vw"
-          className="object-cover"
-          priority
-          unoptimized
-        />
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.25) 55%, transparent 100%)" }}
-        />
-        {/* Blue bar — left edge */}
-        <div className="absolute top-0 left-0 bottom-0 w-[3px]" style={{ background: "var(--blue)" }} />
 
-        <div className="absolute bottom-0 gutter pb-10 pl-8">
-          <span className="blue-tag mb-3 inline-flex">{project.category}</span>
-          <h1
-            className="font-archivo text-[var(--white)] uppercase leading-none"
-            style={{ fontSize: "clamp(2.5rem, 6vw, 6.5rem)", letterSpacing: "-0.025em" }}
-          >
-            {project.title}
-          </h1>
-        </div>
+      {/* ── Full-width hero image ── */}
+      <div className="relative w-full" style={{ height: "65vh", minHeight: "400px" }}>
+        <Image src={project.heroImage} alt={project.title}
+          fill className="object-cover" sizes="100vw" priority />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-[var(--ink)]/20 to-transparent" />
       </div>
 
-      {/* ── Meta bar — fixed grid layout so values don't run together ── */}
-      <div className="border-b border-[var(--border)]" style={{ background: "var(--dim)" }}>
-        <div className="gutter py-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {/* Role */}
-            <div>
-              <p className="t-label text-[var(--gray)] mb-2">Role</p>
-              <p className="text-sm text-[var(--white)] font-medium leading-snug">{project.role}</p>
-            </div>
-            {/* Client */}
-            <div>
-              <p className="t-label text-[var(--gray)] mb-2">Client</p>
-              <p className="text-sm text-[var(--white)] font-medium">{project.client}</p>
-            </div>
-            {/* Year */}
-            <div>
-              <p className="t-label text-[var(--gray)] mb-2">Year</p>
-              <p className="text-sm text-[var(--white)] font-medium">{project.year}</p>
-            </div>
-            {/* Tags */}
-            {project.tags && project.tags.length > 0 && (
-              <div>
-                <p className="t-label text-[var(--gray)] mb-2">Tags</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="blue-tag">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            )}
+      {/* ── Project title + metadata ── */}
+      <div className="gutter">
+        {/* Title block */}
+        <div className="py-8 border-b border-[var(--rule)]">
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            <span className="tag" style={{ borderColor: "var(--accent)", color: "var(--accent)" }}>
+              {project.category}
+            </span>
+            {project.tags.map(t => <span key={t} className="tag">{t}</span>)}
           </div>
+          <h1 className="f-title text-[var(--canvas)] max-w-4xl">{project.title}</h1>
+        </div>
+
+        {/* Meta grid — clean 4-col */}
+        <div className="grid grid-cols-2 md:grid-cols-4 border-b border-[var(--rule)]">
+          {[
+            ["Role",   project.role],
+            ["Client", project.client],
+            ["Year",   String(project.year)],
+            ["Type",   project.category],
+          ].map(([label, value]) => (
+            <div key={label} className="py-5 pr-8 border-r border-[var(--rule)] last:border-r-0">
+              <p className="f-mono text-[var(--mid)] mb-1.5">{label}</p>
+              <p className="text-sm text-[var(--canvas)] font-medium leading-snug">{value}</p>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* ── Body ── */}
-      <div className="gutter py-14 md:py-20 grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-12 md:gap-16">
-        <div>
-          <p
-            className="font-archivo uppercase tracking-tight text-[var(--white)] leading-tight mb-8"
-            style={{ fontSize: "clamp(1.1rem, 2.2vw, 1.75rem)", letterSpacing: "-0.01em" }}
-          >
+      {/* ── Body — lead + case study ── */}
+      <div className="gutter py-14 grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10 md:gap-16 border-b border-[var(--rule)]">
+        {/* Lead statement */}
+        <div className="md:pt-1">
+          <p className="f-mono text-[var(--accent)] mb-4">Overview</p>
+          <p className="font-display text-base md:text-lg uppercase tracking-tight text-[var(--canvas)] leading-tight">
             {project.shortDescription}
           </p>
-          <div className="w-8 h-[2px] mb-8" style={{ background: "var(--blue)" }} />
-          <div className="space-y-5">{renderMd(project.fullCaseStudy)}</div>
+          {project.externalLinks?.map(link => (
+            <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-1.5 mt-6 f-mono text-[var(--accent)] hover:text-[var(--canvas)] transition-colors duration-150">
+              {link.label} <ArrowUpRight size={10} />
+            </a>
+          ))}
         </div>
 
-        <aside className="space-y-8">
-          {project.externalLinks && project.externalLinks.length > 0 && (
-            <div>
-              <p className="t-label text-[var(--gray)] mb-3">Links</p>
-              {project.externalLinks.map((link) => (
-                <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-between py-3 border-b border-[var(--border)] text-sm text-[var(--white)] hover:text-[var(--blue)] transition-colors duration-150 group">
-                  {link.label}
-                  <ExternalLink size={11} className="text-[var(--gray)] group-hover:text-[var(--blue)] transition-colors flex-shrink-0" />
-                </a>
-              ))}
-            </div>
-          )}
-          {project.downloadLinks && project.downloadLinks.length > 0 && (
-            <div>
-              <p className="t-label text-[var(--gray)] mb-3">Downloads</p>
-              {project.downloadLinks.map((dl) => (
-                <a key={dl.url} href={dl.url} download={dl.filename}
-                  className="flex items-center justify-between py-3 border-b border-[var(--border)] text-sm text-[var(--white)] hover:text-[var(--blue)] transition-colors duration-150 group">
-                  {dl.label}
-                  <Download size={11} className="text-[var(--gray)] group-hover:text-[var(--blue)] transition-colors flex-shrink-0" />
-                </a>
-              ))}
-            </div>
-          )}
-        </aside>
+        {/* Case study text */}
+        <div className="space-y-4">
+          {renderMd(project.fullCaseStudy)}
+        </div>
       </div>
 
-      {/* ── Gallery ── */}
+      {/* ── Gallery — editorial image layout ── */}
       {project.galleryImages.length > 0 && (
-        <GallerySection images={project.galleryImages} title={project.title} />
-      )}
+        <div className="gutter py-12 border-b border-[var(--rule)]">
+          <div className="section-header mb-6">
+            <span className="section-num">Gallery</span>
+            <span className="f-mono text-[var(--mid)]">{project.galleryImages.length} Images</span>
+          </div>
 
-      {/* ── Related ── */}
-      {related.length > 0 && (
-        <section className="border-t border-[var(--border)]" style={{ background: "var(--dim)" }}>
-          <div className="gutter py-12">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-5 h-[2px]" style={{ background: "var(--blue)" }} />
-              <p className="t-label" style={{ color: "var(--blue)" }}>More {project.category}</p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {related.map((p) => (
-                <Link key={p.id} href={`/work/${p.slug}`} className="group block relative overflow-hidden aspect-[4/3] bg-[var(--dim)]">
-                  <Image src={p.thumbnailImage} alt={p.title} fill sizes="50vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-[1.04]" unoptimized />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%)" }} />
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <span className="blue-tag mb-2 inline-flex">{p.category}</span>
-                    <p className="font-archivo text-white uppercase leading-none group-hover:text-[var(--blue)] transition-colors"
-                      style={{ fontSize: "clamp(1rem, 2vw, 1.5rem)", letterSpacing: "-0.01em" }}>
-                      {p.title}
-                    </p>
-                  </div>
-                </Link>
+          {/* First image — full width */}
+          <div className="w-full aspect-video mb-[2px] img-wrap relative overflow-hidden"
+            style={{ background: "var(--dim)" }}>
+            <Image src={project.galleryImages[0]} alt={`${project.title} — 1`}
+              fill className="object-cover" sizes="100vw" />
+          </div>
+
+          {/* Remaining — 2-col pairing */}
+          {project.galleryImages.length > 1 && (
+            <div className="grid grid-cols-2 gap-[2px] mb-[2px]">
+              {project.galleryImages.slice(1).map((src, i) => (
+                <div key={i} className="img-wrap relative aspect-[4/3] overflow-hidden"
+                  style={{ background: "var(--dim)" }}>
+                  <Image src={src} alt={`${project.title} — ${i + 2}`}
+                    fill className="object-cover" sizes="50vw" />
+                </div>
               ))}
             </div>
+          )}
+
+          <p className="f-caption mt-3">{project.title} — {project.client}, {project.year}</p>
+        </div>
+      )}
+
+      {/* ── Related projects ── */}
+      {related.length > 0 && (
+        <div className="gutter py-12 border-b border-[var(--rule)]">
+          <div className="section-header mb-6">
+            <span className="section-num">Next</span>
+            <span className="f-mono text-[var(--mid)]">More {project.category}</span>
           </div>
-        </section>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-[2px]">
+            {related.map(p => (
+              <Link key={p.id} href={`/work/${p.slug}`}
+                className="img-wrap group relative aspect-[4/3] overflow-hidden"
+                style={{ background: "var(--dim)" }}>
+                <Image src={p.thumbnailImage} alt={p.title} fill
+                  className="object-cover" sizes="50vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)]/75 to-transparent" />
+                <div className="absolute bottom-0 p-5">
+                  <span className="tag mb-2 inline-flex">{p.category}</span>
+                  <p className="f-subhead text-[var(--canvas)] group-hover:text-[var(--accent)] transition-colors duration-150">
+                    {p.title}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       )}
 
       {/* ── Footer nav ── */}
-      <div className="gutter py-10 border-t border-[var(--border)] flex items-center justify-between">
-        <Link href="/work" className="inline-flex items-center gap-2 t-label text-[var(--gray)] hover:text-[var(--blue)] transition-colors duration-150">
-          <ArrowLeft size={12} /> All Work
+      <div className="gutter py-8 flex items-center justify-between">
+        <Link href="/work"
+          className="f-mono text-[var(--mid)] hover:text-[var(--accent)] transition-colors duration-150 flex items-center gap-1">
+          <ArrowLeft size={10} /> All Work
         </Link>
-        <Link href="/contact" className="btn-blue">
-          Start a Project <ArrowUpRight size={13} />
+        <Link href="/contact" className="btn-primary">
+          Start a Project <ArrowUpRight size={12} />
         </Link>
       </div>
     </article>

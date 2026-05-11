@@ -1,47 +1,28 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
-  const year = new Date().getFullYear();
+  const yr = new Date().getFullYear();
   return (
-    <footer className="border-t border-[var(--border)]">
-      <div className="gutter py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10 pb-10 border-b border-[var(--border)]">
-          <div>
-            <Link href="/" className="font-archivo text-2xl uppercase tracking-tight text-[var(--white)] hover:text-[var(--blue)] transition-colors duration-150 block mb-3">
-              RWS<span className="text-[var(--blue)]">.</span>
-            </Link>
-            <p className="t-body text-[var(--gray)] text-sm max-w-xs">
-              Independent graphic design studio. Bold work. High standards.
-            </p>
-          </div>
-
-          <div>
-            <p className="t-label text-[var(--gray)] mb-4">Pages</p>
-            <div className="flex flex-col gap-2.5">
-              {([["Work","/work"],["About","/about"],["Contact","/contact"]] as const).map(([l,h])=>(
-                <Link key={h} href={h} className="t-label text-[var(--gray)] hover:text-[var(--blue)] ul-link self-start transition-colors duration-150">{l}</Link>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="t-label text-[var(--gray)] mb-4">Connect</p>
-            <div className="flex flex-col gap-2.5">
-              <a href="mailto:hello@rwscreative.ca" className="t-label text-[var(--gray)] hover:text-[var(--blue)] ul-link self-start transition-colors">hello@rwscreative.ca</a>
-              {["Instagram","LinkedIn"].map(s=>(
-                <a key={s} href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                  className="t-label text-[var(--gray)] hover:text-[var(--blue)] transition-colors inline-flex items-center gap-1">
-                  {s} <ArrowUpRight size={10} />
-                </a>
-              ))}
-            </div>
-          </div>
+    <footer className="border-t border-[var(--rule)]">
+      <div className="gutter py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="flex flex-col gap-1">
+          <Link href="/" className="font-display text-xl tracking-tight uppercase text-[var(--canvas)] hover:text-[var(--accent)] transition-colors duration-150">
+            RWS<span style={{ color: "var(--accent)" }}>.</span>
+          </Link>
+          <p className="f-mono text-[var(--mid)]">Independent Design Studio — Canada</p>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-between gap-2">
-          <p className="t-label text-[var(--gray)]">© {year} RWS Creative</p>
-          <p className="t-label text-[var(--gray)]">rwscreative.ca</p>
+        <nav className="flex gap-8">
+          {[["Work","/work"],["About","/about"],["Contact","/contact"]].map(([l,h]) => (
+            <Link key={h} href={h} className="f-mono text-[var(--mid)] hover:text-[var(--accent)] transition-colors duration-150">{l}</Link>
+          ))}
+        </nav>
+
+        <div className="flex flex-col gap-1 text-right">
+          <a href="mailto:hello@rwscreative.ca" className="f-mono text-[var(--mid)] hover:text-[var(--accent)] transition-colors duration-150">
+            hello@rwscreative.ca
+          </a>
+          <p className="f-mono text-[var(--rule)]">© {yr} RWS Creative</p>
         </div>
       </div>
     </footer>

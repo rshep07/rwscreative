@@ -2,242 +2,183 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─────────────────────────────────────
-   TOKENS
-───────────────────────────────────── */
+/* ─ TOKENS ─────────────────────────────────── */
 @layer base {
   :root {
-    --black:   #0A0A0A;
-    --white:   #F2F2F0;
-    --blue:    #00BFFF;
-    --blue10:  rgba(0,191,255,0.08);
-    --blue25:  rgba(0,191,255,0.25);
-    --gray:    #555555;
-    --dim:     #1E1E1E;
-    --border:  #1A1A1A;
-    --nav-h:   64px;
-    --g:       clamp(1.25rem, 5vw, 5rem);
+    --ink:    #0A0A0A;
+    --canvas: #E8E4DC;
+    --mid:    #8A867E;
+    --dim:    #1A1816;
+    --raised: #222018;
+    --rule:   #2A2724;
+    --accent: #00BFFF;
+    --nav-h:  60px;
+    --g:      clamp(1.25rem, 4vw, 4rem);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
   body {
-    background: var(--black);
-    color: var(--white);
+    background: var(--ink);
+    color: var(--canvas);
     font-family: "Archivo", system-ui, sans-serif;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
-  ::selection { background: var(--blue); color: var(--black); }
-
+  ::selection { background: var(--accent); color: var(--ink); }
   ::-webkit-scrollbar { width: 2px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--dim); }
+  ::-webkit-scrollbar-thumb { background: var(--rule); }
 }
 
-/* ─────────────────────────────────────
-   TYPE SCALE  — Archivo Black is the star
-───────────────────────────────────── */
+/* ─ TYPOGRAPHY ──────────────────────────────── */
 @layer utilities {
-  /* Screen-filling display — for the hero */
-  .t-display {
-    font-family: "Archivo Black", system-ui, sans-serif;
-    font-size: clamp(5rem, 22vw, 28rem);
-    font-weight: 900;
+  /* Mastheads */
+  .f-display {
+    font-family: "Archivo Black", sans-serif;
+    font-size: clamp(4.5rem, 18vw, 22rem);
     line-height: 0.88;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     text-transform: uppercase;
   }
-
-  /* Section headline */
-  .t-heading {
-    font-family: "Archivo Black", system-ui, sans-serif;
+  .f-title {
+    font-family: "Archivo Black", sans-serif;
     font-size: clamp(2.5rem, 7vw, 9rem);
-    font-weight: 900;
     line-height: 0.9;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     text-transform: uppercase;
   }
-
-  /* Project row title — oversized list items */
-  .t-project {
-    font-family: "Archivo Black", system-ui, sans-serif;
-    font-size: clamp(2rem, 5vw, 6.5rem);
-    font-weight: 900;
+  .f-headline {
+    font-family: "Archivo Black", sans-serif;
+    font-size: clamp(1.75rem, 4vw, 5rem);
     line-height: 0.92;
     letter-spacing: -0.02em;
     text-transform: uppercase;
   }
-
-  /* Sub-heading */
-  .t-sub {
-    font-family: "Archivo Black", system-ui, sans-serif;
-    font-size: clamp(1.25rem, 2.5vw, 3rem);
-    font-weight: 900;
-    line-height: 0.95;
-    letter-spacing: -0.01em;
+  .f-subhead {
+    font-family: "Archivo Black", sans-serif;
+    font-size: clamp(1.1rem, 2vw, 2.25rem);
+    line-height: 1.0;
+    letter-spacing: -0.015em;
     text-transform: uppercase;
   }
-
-  /* Mono label — Space Mono */
-  .t-label {
+  /* Project row titles on work page */
+  .f-project {
+    font-family: "Archivo Black", sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 4.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  /* Meta/labels */
+  .f-mono {
     font-family: "Space Mono", monospace;
-    font-size: 0.6875rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .f-caption {
+    font-family: "Archivo", sans-serif;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--mid);
+    line-height: 1.5;
   }
 
-  /* Body */
-  .t-body {
-    font-family: "Archivo", system-ui, sans-serif;
-    font-size: 0.9375rem;
-    font-weight: 400;
-    line-height: 1.75;
-    letter-spacing: 0.01em;
-  }
+  /* Colours */
+  .c-canvas { color: var(--canvas); }
+  .c-mid    { color: var(--mid); }
+  .c-accent { color: var(--accent); }
+  .c-ink    { color: var(--ink); }
 
-  /* Gutter + nav */
-  .gutter  { padding-left: var(--g); padding-right: var(--g); }
-  .nav-pt  { padding-top: var(--nav-h); }
-
-  /* Colour helpers */
-  .c-blue  { color: var(--blue); }
-  .c-gray  { color: var(--gray); }
-  .c-white { color: var(--white); }
+  /* Layout */
+  .gutter   { padding-left: var(--g); padding-right: var(--g); }
+  .nav-pt   { padding-top: var(--nav-h); }
 }
 
-/* ─────────────────────────────────────
-   COMPONENTS
-───────────────────────────────────── */
+/* ─ COMPONENTS ──────────────────────────────── */
 @layer components {
-
-  /* ── Buttons ── */
-  .btn-blue {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--blue);
-    color: var(--black);
-    padding: 0.875rem 2rem;
-    font-family: "Space Mono", monospace;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: background 150ms ease, color 150ms ease;
-    white-space: nowrap;
-  }
-  .btn-blue:hover { background: var(--white); }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: 1px solid var(--border);
-    color: var(--white);
-    padding: 0.875rem 2rem;
-    font-family: "Space Mono", monospace;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: border-color 150ms ease, color 150ms ease;
-    white-space: nowrap;
-  }
-  .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
-
-  .btn-outline-dark {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: 1px solid rgba(10,10,10,0.2);
-    color: var(--black);
-    padding: 0.875rem 2rem;
-    font-family: "Space Mono", monospace;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: all 150ms ease;
-    white-space: nowrap;
-  }
-  .btn-outline-dark:hover { background: var(--black); color: var(--white); }
-
-  /* ── Underline hover ── */
-  .ul-link { position: relative; display: inline-block; }
-  .ul-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px; left: 0;
-    width: 0; height: 1px;
-    background: var(--blue);
-    transition: width 150ms ease;
-  }
-  .ul-link:hover::after { width: 100%; }
-
-  /* ── Blue tag ── */
-  .blue-tag {
-    display: inline-flex;
-    align-items: center;
-    background: var(--blue10);
-    color: var(--blue);
-    border: 1px solid rgba(0,191,255,0.2);
-    padding: 0.25rem 0.75rem;
-    font-family: "Space Mono", monospace;
-    font-size: 0.6rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  /* ── Zoom ── */
-  .zoom { overflow: hidden; }
-  .zoom img { transition: transform 280ms ease; }
-  .zoom:hover img { transform: scale(1.05); }
-
-  /* ── Form field ── */
-  .field {
-    width: 100%;
-    background: transparent;
+  /* Thin horizontal rule */
+  .rule {
     border: 0;
-    border-bottom: 1px solid var(--border);
-    padding: 0.875rem 0;
-    color: var(--white);
-    font-family: "Archivo", system-ui, sans-serif;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 150ms ease;
-    -webkit-appearance: none;
-    appearance: none;
+    border-top: 1px solid var(--rule);
+    width: 100%;
   }
-  .field:focus { border-color: var(--blue); }
-  .field::placeholder { color: var(--gray); }
-  textarea.field { resize: vertical; min-height: 8rem; }
 
-  /* ── Filter pill ── */
-  .pill {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    padding: 0.4rem 1rem;
+  /* Section number + label header */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .section-num {
     font-family: "Space Mono", monospace;
-    font-size: 0.6rem;
-    font-weight: 400;
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 0.1em;
+  }
+
+  /* Project tag pill */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--rule);
+    color: var(--mid);
+    padding: 0.2rem 0.6rem;
+    font-family: "Space Mono", monospace;
+    font-size: 0.55rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--gray);
-    transition: color 150ms, border-color 150ms;
+    transition: border-color 120ms, color 120ms;
   }
-  .pill:hover { color: var(--white); border-color: var(--dim); }
-  .pill.active { color: var(--blue); border-color: var(--blue); }
+  .tag:hover, .tag.active { border-color: var(--accent); color: var(--accent); }
+
+  /* Image hover zoom */
+  .img-wrap { overflow: hidden; }
+  .img-wrap img { transition: transform 350ms cubic-bezier(0.25, 0, 0, 1); }
+  .img-wrap:hover img { transform: scale(1.04); }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--canvas); color: var(--ink);
+    padding: 0.75rem 1.75rem;
+    font-family: "Space Mono", monospace;
+    font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    transition: background 120ms, color 120ms;
+  }
+  .btn-primary:hover { background: var(--accent); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--rule); color: var(--canvas);
+    padding: 0.75rem 1.75rem;
+    font-family: "Space Mono", monospace;
+    font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    transition: border-color 120ms, color 120ms;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Form field */
+  .field {
+    width: 100%; background: transparent;
+    border: 0; border-bottom: 1px solid var(--rule);
+    padding: 0.875rem 0; color: var(--canvas);
+    font-family: "Archivo", sans-serif; font-size: 1rem;
+    outline: none; transition: border-color 120ms;
+    -webkit-appearance: none; appearance: none;
+  }
+  .field:focus { border-color: var(--accent); }
+  .field::placeholder { color: var(--mid); }
+  textarea.field { resize: vertical; min-height: 7rem; }
 }
 
-/* ─────────────────────────────────────
-   KEYFRAMES
-───────────────────────────────────── */
 @keyframes marquee {
   0%   { transform: translateX(0%); }
   100% { transform: translateX(-50%); }

@@ -1,17 +1,12 @@
 export type ProjectCategory =
   | "Branding" | "Editorial" | "Motion" | "Web Design" | "Packaging" | "Photography";
 
-export type FilterCategory = ProjectCategory | "All";
-
-export interface ExternalLink  { label: string; url: string; }
-export interface DownloadLink  { label: string; url: string; filename?: string; }
-
 export interface Project {
   id:               string;
   slug:             string;
   title:            string;
   category:         ProjectCategory;
-  tags?:            string[];
+  tags:             string[];
   shortDescription: string;
   fullCaseStudy:    string;
   role:             string;
@@ -20,8 +15,7 @@ export interface Project {
   thumbnailImage:   string;
   heroImage:        string;
   galleryImages:    string[];
-  externalLinks?:   ExternalLink[];
-  downloadLinks?:   DownloadLink[];
+  externalLinks?:   { label: string; url: string }[];
+  downloadLinks?:   { label: string; url: string }[];
   featured?:        boolean;
-  publishedAt?:     string;
 }
